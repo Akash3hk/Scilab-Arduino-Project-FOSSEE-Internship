@@ -36,10 +36,10 @@ class Analog:   # This class contains analog in/out functions
         Function Name:  cmd_analog_in(Ano, pin)
         Input Args:     Ano, pin no
         """
-        self.cmd = ""
+        cmd = ""
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "A" + a[pin]
-        ser.write(self.cmd)
+        cmd = "A" + a[pin]
+        ser.write(cmd)
         a = ser.read()
         return (int((1023-0)*int(ord(a))/(255-0)))
 
@@ -60,13 +60,13 @@ class Digital:  # This class contains digital in/out functions
         Function Name:  cmd_digital_out(Ano, pin, val)
         Input Args:     Ano, pin no, val
         """
-        self.cmd = ""
+        cmd = ""
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "D"+"a"+a[pin]+"1"
-        ser.write(self.cmd)
-        self.cmd = ""
-        self.cmd = "D"+"w"+a[pin]+str(val)  # val converted to string
-        ser.write(self.cmd)
+        cmd = "D"+"a"+a[pin]+"1"
+        ser.write(cmd)
+        cmd = ""
+        cmd = "D"+"w"+a[pin]+str(val)  # val converted to string
+        ser.write(cmd)
 
     def cmd_digital_in(Ano, pin):
         """
@@ -76,13 +76,13 @@ class Digital:  # This class contains digital in/out functions
         b = []        # Didn't understand why this  {b = []} was declared. But as was said not to change the
                     # declared variables, I kept it as it is.
                     # But according to me it shouldn't be here.
-        self.cmd=""
+        cmd=""
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "D"+"a"+a[pin]+"0"
-        ser.write(self.cmd)
-        self.cmd = ""
-        self.cmd = "D"+"r"+a[pin]
-        ser.write(self.cmd)
+        cmd = "D"+"a"+a[pin]+"0"
+        ser.write(cmd)
+        cmd = ""
+        cmd = "D"+"r"+a[pin]
+        ser.write(cmd)
         a = ser.read()
         return a
 
@@ -96,10 +96,10 @@ class DCmotor:  # This class contains functions to operate the DC motor
         Description:    This function connects the DC motor with the arduino board
         in the specified mode.
         """
-        self.cmd = ""
+        cmd = ""
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "C"+a[mno]+a[pin1]+a[pin2]+a[mode]
-        ser.write(self.cmd)
+        cmd = "C"+a[mno]+a[pin1]+a[pin2]+a[mode]
+        ser.write(cmd)
 
     def cmd_dcmotor_run(Ano, mno, val):
         """
@@ -107,14 +107,14 @@ class DCmotor:  # This class contains functions to operate the DC motor
         Input Args:     Ano, mno, val
         Description:    This function operates the Dc motor as per the specified values
         """
-        self.cmd = ""
+        cmd = ""
         if (val <0):
             dirc = 0
         else:
             dirc = 1
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "M"+a[mno]+a[dirc]+chr(abs(val))
-        ser.write(self.cmd)
+        cmd = "M"+a[mno]+a[dirc]+chr(abs(val))
+        ser.write(cmd)
 
     def cmd_dcmotor_release(Ano, mno):
         """
@@ -122,10 +122,10 @@ class DCmotor:  # This class contains functions to operate the DC motor
         Input Args:     Ano, mno
         Description:    This function detaches the DC motor from the Arduino board
         """
-        self.cmd = ""
+        cmd = ""
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "M"+a[mno]+"r"
-        ser.write(self.cmd)
+        cmd = "M"+a[mno]+"r"
+        ser.write(cmd)
 
 
 class Servomotor:   # This class contains functions to operate the DC motor
@@ -136,10 +136,10 @@ class Servomotor:   # This class contains functions to operate the DC motor
         Input Args:     Ano, servo
         Description:    This function attach["a"] the servo motor to arduino board
         """
-        self.cmd = ""
+        cmd = ""
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "S"+"a"+a[servo]
-        ser.write(self.cmd)
+        cmd = "S"+"a"+a[servo]
+        ser.write(cmd)
 
     def cmd_servo_detach(Ano, servo): #1->pin=9  #2->pin=10
         """
@@ -147,10 +147,10 @@ class Servomotor:   # This class contains functions to operate the DC motor
         Input Args:     Ano, servo
         Description:    This function detach["d"] the servo motor to arduino board
         """
-        self.cmd = ""
+        cmd = ""
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "S"+"d"+a[servo]
-        ser.write(self.cmd)
+        cmd = "S"+"d"+a[servo]
+        ser.write(cmd)
 
     def cmd_servo_move(Ano, servo, angle): #1->pin=9  #2->pin=10
         """
@@ -158,10 +158,10 @@ class Servomotor:   # This class contains functions to operate the DC motor
         Input Args:     Ano, servo, angle
         Description:    This function operates["w"] the servo motor to rotate with the specified angle
         """
-        self.cmd = ""
+        cmd = ""
         a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "A", "B", "C", "D"]
-        self.cmd = "S"+"w"+a[servo]+chr(angle)
-        ser.write(self.cmd)
+        cmd = "S"+"w"+a[servo]+chr(angle)
+        ser.write(cmd)
 
 
 def checkfirmware():
